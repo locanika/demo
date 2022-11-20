@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  nika-logs:
+    image: amir20/dozzle:latest
+    volumes:
+{% if docker_mode == 'root_less' %}
+      - /run/user/1000/docker.sock:/var/run/docker.sock
+{% else %}
+      - /var/run/docker.sock:/var/run/docker.sock
+{% endif %}
+    environment:
+      DOMAINS: nika-logs.lo
+
+  nika-gateway:
+    image: nginx:1.17.8-alpine
+    volumes:
+      - ./projects/cfi-gateway:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+      
+  nika-adminer:
+    image: adminer
+    restart: {{ services_restart_policy }}
+    environment:
+      DOMAINS: nika-adminer.lo
+      
+  nika-redis:
+    image: redis:6.0.5
+    command: redis-server
+    restart: {{ services_restart_policy }}
+    
+  nika-pg:
+    image: postgres:12.3
+    restart: {{ services_restart_policy }}
+    environment:
+      POSTGRES_USER: pg
+      POSTGRES_PASSWORD: pg
+    volumes:
+      - volume-nika-pg:/var/lib/postgresql/data
