@@ -9,6 +9,8 @@ services:
 {% else %}
       - /var/run/docker.sock:/var/run/docker.sock
 {% endif %}
+    ports:
+      - 9991:8080
     environment:
       DOMAINS: nika-logs.lo
 
@@ -22,6 +24,8 @@ services:
   nika-adminer:
     image: adminer
     restart: {{ services_restart_policy }}
+    ports:
+      - 9992:8080
     environment:
       DOMAINS: nika-adminer.lo
       
@@ -38,6 +42,15 @@ services:
       POSTGRES_PASSWORD: pg
     volumes:
       - volume-nika-pg:/var/lib/postgresql/data
+
+  nika:
+    build: ./services/nika/
+    volumes:
+      - ./projects/nika:/application
+    ports:
+      - 9993:80
+    environment:
+      DOMAINS: nika.lo
 
 volumes:
   volume-nika-pg: null
