@@ -38,5 +38,6 @@ enabled_services:
   - nika
 
   # tools
+  - nika-gateway
   - nika-logs
   - nika-adminer
