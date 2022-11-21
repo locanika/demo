@@ -4,7 +4,7 @@
   "description": "Locanika Demo Configuration",
   "main": "index.js",
   "dependencies": {
-    "locanika": "^1.0.0"
+    "locanika": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {
