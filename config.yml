@@ -25,7 +25,7 @@ services_restart_policy: always
 
 projects:
   - name: nika
-    src: git@github.com:locanika/demo_project.git
+    src: https://github.com/locanika/demo_project.git
 
 # List services that enabled in current local environment
 enabled_services:
